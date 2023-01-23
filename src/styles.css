@@ -1,0 +1,23 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  [data-theme="light"] {
+    --bg-color: white;
+    --color: black;
+  }
+  
+  [data-theme="dark"] {
+    --bg-color: black;
+    --color: white;
+  }
+  
+  .card {
+    height: 50vh;
+    margin: 0 2%;
+    border: 2px solid black;
+    background-color: var(--bg-color);
+    color: var(--color);
+  }
+  

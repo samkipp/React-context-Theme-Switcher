@@ -1,29 +1,31 @@
-import './App.css';
+import "./styles.css";
+import Card from "./components/Card.js";
+import { MyContext } from "./context/context"
+import React, { useState } from "react";
+import useLocalStorage from "use-local-storage";
 
-function App() {
+export default function App() {
+  const [title, setTitle] = useState("dark");
+
+  const defaultDark = window.matchMedia("(prefers-color-scheme:dark)").matches;
+  const [theme, setTheme] = useLocalStorage(
+    "theme",
+    defaultDark ? "dark" : "light"
+  );
+
+  const switchTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    const newTitle = title === "light" ? "dark" : "light";
+    setTitle(newTitle);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <MyContext.Provider value={theme}>
+      <div className="App" data-theme={theme}>
+        <h1>A card that changes theme</h1>
+        <Card switchTheme={switchTheme} title={title} />
+      </div>
+    </MyContext.Provider>
   );
 }
-
-export default App;
